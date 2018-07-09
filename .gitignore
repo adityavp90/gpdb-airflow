@@ -1,0 +1,9 @@
+logs/
+airflow.cfg
+unittests.cfg
+airflow.db
+python-notebooks/.ipynb_checkpoints
+python-notebooks/.dslab_user.cred
+.DS_Store
+.idea/
+.pairs
