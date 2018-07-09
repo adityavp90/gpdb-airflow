@@ -7,3 +7,4 @@ python-notebooks/.dslab_user.cred
 .DS_Store
 .idea/
 .pairs
+**/__pycache__
