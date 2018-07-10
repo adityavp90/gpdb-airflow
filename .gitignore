@@ -10,3 +10,4 @@ python-notebooks/.dslab_user.cred
 *.error
 *.out
 env.sh
+**/__pycache__
