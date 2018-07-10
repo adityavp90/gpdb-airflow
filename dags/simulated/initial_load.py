@@ -6,7 +6,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 from datetime import datetime, timedelta
 
 # Environment variables
-sql_location = os.path.join("/Users/apadhye/Pivotal/gpdb-airflow/tasks")
+sql_location = os.path.join("/Users/ajoshi/Pivotal/gpdb-airflow/tasks")
 
 
 default_args = {
@@ -18,18 +18,18 @@ dag = DAG('initial_load', default_args=default_args,
           schedule_interval=None,
           template_searchpath=sql_location)
 
-load_trajectory_external = PostgresOperator(
-  task_id='load_trajectory_external',
+load_trajectory_landing = PostgresOperator(
+  task_id='load_trajectory_landing',
   postgres_conn_id='gpdb_55',
-  sql='load_trajectory_external.sql',
+  sql='load_trajectory_landing.sql',
   database='airflow_test',
   dag=dag
 )
 
-load_label_external = PostgresOperator(
-  task_id='load_label_external',
+load_label_landing = PostgresOperator(
+  task_id='load_label_landing',
   postgres_conn_id='gpdb_55',
-  sql='load_label_external.sql',
+  sql='load_label_landing.sql',
   database='airflow_test',
   dag=dag
 )

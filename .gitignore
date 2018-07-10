@@ -7,3 +7,6 @@ python-notebooks/.dslab_user.cred
 .DS_Store
 .idea/
 .pairs
+*.error
+*.out
+env.sh

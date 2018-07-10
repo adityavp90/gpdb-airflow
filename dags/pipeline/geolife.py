@@ -6,7 +6,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 from datetime import datetime, timedelta
 
 # Environment variables
-sql_location = os.path.join("/Users/apadhye/Pivotal/gpdb-airflow/tasks")
+sql_location = os.path.join("/Users/ajoshi/Pivotal/gpdb-airflow/tasks")
 
 default_args = {
     'owner': 'airflow_user',

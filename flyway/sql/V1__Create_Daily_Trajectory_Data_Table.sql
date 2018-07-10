@@ -1,4 +1,4 @@
-drop table geolife.geolife_trajectory;
+drop table if exists geolife.geolife_trajectory;
 create table geolife.geolife_trajectory (
 uid text,
 latitude float,
@@ -14,7 +14,7 @@ partition by LIST (tdate)
 (partition p20000101 VALUES(date '2000-01-01'));
 
 
-drop table geolife.geolife_trajectory_clean;
+drop table if exists geolife.geolife_trajectory_clean;
 create table geolife.geolife_trajectory_clean (
 uid text,
 latitude float,
@@ -31,7 +31,7 @@ partition by LIST (tdate)
 (partition p20000101 VALUES(date '2000-01-01'));
 
 
-drop table geolife.geolife_label;
+drop table if exists geolife.geolife_label;
 create table geolife.geolife_label (
 uid	text,
 start_date date,
@@ -45,7 +45,7 @@ partition by LIST (start_date)
 (partition p20000101 VALUES(date '2000-01-01'));
 
 
-drop table geolife.geolife_label_clean;
+drop table if exists geolife.geolife_label_clean;
 create table geolife.geolife_label_clean (
 uid text,
 start_date date,
@@ -61,7 +61,26 @@ partition by LIST (start_date)
 (partition p20000101 VALUES(date '2000-01-01'));
 
 
-drop table geolife.geolife_trajectory_label_speed;
+drop table if exists geolife.geolife_trajectory_label_clean;
+create table geolife.geolife_trajectory_label_clean (
+uid text,
+latitude double precision,
+longitude double precision,
+pt geometry,
+altitude double precision,
+epoch double precision,
+tdate date,
+ttime time without time zone,
+ttimestamp timestamp without time zone,
+mode text,
+trajectory_id text
+)
+distributed by (uid)
+partition by LIST (tdate)
+(partition p20000101 VALUES(date '2000-01-01'));
+
+
+drop table if exists geolife.geolife_trajectory_label_speed;
 create table geolife.geolife_trajectory_label_speed (
 uid text,
 trajectory_id text,
@@ -81,7 +100,7 @@ partition by LIST (tdate)
 (partition p20000101 VALUES(date '2000-01-01'));
 
 
-drop table geolife.geolife_trajectory_speed_walk;
+drop table if exists geolife.geolife_trajectory_speed_walk;
 create table geolife.geolife_trajectory_speed_walk (
 trajectory_id text,
 tdate date,
