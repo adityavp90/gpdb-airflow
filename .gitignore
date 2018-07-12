@@ -11,3 +11,4 @@ python-notebooks/.dslab_user.cred
 *.out
 env.sh
 **/__pycache__
+airflow-webserver.pid

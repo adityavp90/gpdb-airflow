@@ -10,7 +10,7 @@ sql_location = os.path.join("/Users/ajoshi/Pivotal/gpdb-airflow/tasks")
 
 default_args = {
     'owner': 'airflow_user',
-    'start_date': datetime(2010, 1, 1)
+    'start_date': datetime(2007, 1, 1)
 }
 
 dag = DAG('geolife', default_args=default_args,
@@ -74,11 +74,24 @@ trajectory_speed_walk = PostgresOperator(
     dag=dag
 )
 
+create_tsfresh_features = PostgresOperator(
+    task_id='create_tsfresh_features',
+    postgres_conn_id='gpdb_55',
+    sql='create_tsfresh_features.sql',
+    database='airflow_test',
+    dag=dag
+)
 
 
-fetch_daily_trajectory >> clean_daily_trajectory
-fetch_daily_label >> clean_daily_label
-clean_daily_trajectory >> merge_trajectory_label
-clean_daily_label >> merge_trajectory_label
-merge_trajectory_label >> calculate_trajectory_speed
-calculate_trajectory_speed >> trajectory_speed_walk
+fetch_daily_trajectory >> clean_daily_trajectory >> merge_trajectory_label
+fetch_daily_label >> clean_daily_label >> merge_trajectory_label
+
+merge_trajectory_label >> calculate_trajectory_speed >> trajectory_speed_walk >> create_tsfresh_features
+
+
+# fetch_daily_trajectory >> clean_daily_trajectory
+# fetch_daily_label >> clean_daily_label
+# clean_daily_trajectory >> merge_trajectory_label
+# clean_daily_label >> merge_trajectory_label
+# merge_trajectory_label >> calculate_trajectory_speed
+# calculate_trajectory_speed >> trajectory_speed_walk
