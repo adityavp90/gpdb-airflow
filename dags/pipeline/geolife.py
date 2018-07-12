@@ -82,11 +82,18 @@ create_tsfresh_features = PostgresOperator(
     dag=dag
 )
 
+pivot_tsfresh_features = PostgresOperator(
+    task_id='pivot_tsfresh_features',
+    postgres_conn_id='gpdb_55',
+    sql='pivot_tsfresh_features.sql',
+    database='airflow_test',
+    dag=dag
+)
 
 fetch_daily_trajectory >> clean_daily_trajectory >> merge_trajectory_label
 fetch_daily_label >> clean_daily_label >> merge_trajectory_label
 
-merge_trajectory_label >> calculate_trajectory_speed >> trajectory_speed_walk >> create_tsfresh_features
+merge_trajectory_label >> calculate_trajectory_speed >> trajectory_speed_walk >> create_tsfresh_features >> pivot_tsfresh_features
 
 
 # fetch_daily_trajectory >> clean_daily_trajectory
