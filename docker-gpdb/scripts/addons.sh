@@ -10,7 +10,6 @@ tar -xvf /tmp/${MADLIB_INSTALLER}.tar.gz -C /tmp
 rm /tmp/${MADLIB_INSTALLER}.tar.gz
 su gpadmin -l -c "gppkg -i /tmp/${MADLIB_INSTALLER}/${MADLIB_INSTALLER}.gppkg"
 rm /tmp/${MADLIB_INSTALLER}/${MADLIB_INSTALLER}.gppkg
-su gpadmin -l -c "/usr/local/greenplum-db/madlib/bin/madpack -s madlib -p greenplum -c gpadmin@localhost:5432/gpadmin install"
 
 su gpadmin -l -c "gppkg -ai /tmp/${POSTGIS_INSTALLER}.gppkg"
 
