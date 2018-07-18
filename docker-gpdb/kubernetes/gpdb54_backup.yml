@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpdb54
+spec:
+  selector:
+    app: gpdb54
+  ports:
+    - protocol: TCP
+      port: 22
+      targetPort: 5432
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpdb54
+spec:
+  selector:
+    matchLabels:
+      app: gpdb54
+  template:
+    metadata:
+      labels:
+        app: gpdb54
+    spec:
+      containers:
+        - image: "gpdb54:latest"
+          name: gpdb54
+          imagePullPolicy: Never
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
+          env:
+            - name: GPDB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: gpdb-config
+                  key: gpdb_user
+            - name: GPDB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: gpdb-config
+                  key: gpdb_password
+          ports:
+            - containerPort: 5432
+              name: gpdb54
+          volumeMounts:
+            - name: gpdb-storage
+              mountPath: /gpdata
+      volumes:
+        - name: gpdb-storage
+          persistentVolumeClaim:
+            claimName: gpdb-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gpdb-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+

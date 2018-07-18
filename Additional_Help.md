@@ -70,4 +70,16 @@ https://github.com/celery/kombu/issues/870
 
 
 
+docker-machine ip default
 
+Kill Greenplum container: (Will lose all data)
+```bash
+docker stop gpdb54-container
+```
+
+
+export GPDB_HOST=$(docker-machine ip)
+
+
+Unsetting:
+eval $(docker-machine env -u)

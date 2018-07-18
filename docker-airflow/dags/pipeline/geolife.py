@@ -6,7 +6,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 from datetime import datetime, timedelta
 
 # Environment variables
-sql_location = os.path.join("/Users/ajoshi/Pivotal/gpdb-airflow/tasks")
+sql_location = os.path.join("/usr/local/airflow/tasks")
 
 default_args = {
     'owner': 'airflow_user',
@@ -19,7 +19,7 @@ dag = DAG('geolife', default_args=default_args,
 
 fetch_daily_trajectory = PostgresOperator(
     task_id='fetch_daily_trajectory',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='fetch_daily_trajectory.sql',
     database='airflow_test',
     dag=dag
@@ -27,7 +27,7 @@ fetch_daily_trajectory = PostgresOperator(
 
 clean_daily_trajectory = PostgresOperator(
     task_id='clean_daily_trajectory',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='clean_daily_trajectory.sql',
     database='airflow_test',
     dag=dag
@@ -35,7 +35,7 @@ clean_daily_trajectory = PostgresOperator(
 
 fetch_daily_label = PostgresOperator(
     task_id='fetch_daily_label',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='fetch_daily_label.sql',
     database='airflow_test',
     dag=dag
@@ -43,7 +43,7 @@ fetch_daily_label = PostgresOperator(
 
 clean_daily_label = PostgresOperator(
     task_id='clean_daily_label',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='clean_daily_label.sql',
     database='airflow_test',
     dag=dag
@@ -51,7 +51,7 @@ clean_daily_label = PostgresOperator(
 
 merge_trajectory_label = PostgresOperator(
     task_id='merge_trajectory_label',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='merge_trajectory_label.sql',
     database='airflow_test',
     dag=dag
@@ -60,7 +60,7 @@ merge_trajectory_label = PostgresOperator(
 
 calculate_trajectory_speed = PostgresOperator(
     task_id='calculate_trajectory_speed',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='calculate_trajectory_speed.sql',
     database='airflow_test',
     dag=dag
@@ -68,7 +68,7 @@ calculate_trajectory_speed = PostgresOperator(
 
 trajectory_speed_walk = PostgresOperator(
     task_id='trajectory_speed_walk',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='trajectory_speed_walk.sql',
     database='airflow_test',
     dag=dag
@@ -76,7 +76,7 @@ trajectory_speed_walk = PostgresOperator(
 
 create_tsfresh_features = PostgresOperator(
     task_id='create_tsfresh_features',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='create_tsfresh_features.sql',
     database='airflow_test',
     dag=dag
@@ -84,7 +84,7 @@ create_tsfresh_features = PostgresOperator(
 
 pivot_tsfresh_features = PostgresOperator(
     task_id='pivot_tsfresh_features',
-    postgres_conn_id='gpdb_55',
+    postgres_conn_id='gpdb54',
     sql='pivot_tsfresh_features.sql',
     database='airflow_test',
     dag=dag

@@ -5,10 +5,12 @@ airflow.db
 python-notebooks/.ipynb_checkpoints
 python-notebooks/.dslab_user.cred
 .DS_Store
-.idea/
+**/.idea/
 .pairs
 *.error
 *.out
 env.sh
 **/__pycache__
 airflow-webserver.pid
+docker-gpdb/pivotal/
+!*/docker-gpdb/pivotal/download.sh
