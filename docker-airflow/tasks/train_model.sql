@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS geolife.features_walk_{{ds_nodash}}_test, geolife.features_walk_{{ds_nodash}}_train;
 SELECT madlib.train_test_split(
-                                'geolife.ts_features_walk_pvt',    -- Source table
+                                'geolife.tsfresh_model_features',    -- Source table
                                 'geolife.features_walk_{{ds_nodash}}',     -- Output table
                                 0.8,       -- Sample proportion
                                 0.2,       -- Sample proportion

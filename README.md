@@ -175,7 +175,7 @@ https://stackoverflow.com/questions/39811650/increase-disk-space-on-docker-toolb
 * Deal with project root env variable
 [2018-07-18 00:27:22,916] {models.py:1644} ERROR - could not extend relation 1663/32768/24663: No space left on device
 * In gpdb Dockerfile, change user to gpadmin and workingdir to /home/gpadmin
-
+* convert task specifications into a function
 
 
 ToDo (long):
@@ -186,3 +186,4 @@ https://stackoverflow.com/questions/50184012/run-parallel-tasks-in-apache-airflo
 * Try multi class model
 * DS: we are using tsfresh function extract_relevant_features to generate features, this function uses the labels of the timeseries to generate features. Ideally we want to do a test train split before this step to keep our test set kosher, but due to intrest of time and as this is a demo we are going to test/train split after this step. In further iterations we might comeback to this and redo it the right way later.
 * Testing of the airflow task scripts : brainstorm on ideas, test dag/ parametriization of tasks/ all tasks as functions
+* Debug the difference between the subtract of geolife_trajectory_clean and geolife_trajectory_label_clean (ignoring for mow)

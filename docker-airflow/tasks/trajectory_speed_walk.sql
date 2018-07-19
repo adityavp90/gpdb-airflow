@@ -9,8 +9,9 @@ select trajectory_id as id,
     interval_hour,
     speed,
     mode,
-    case when mode = 'walk' then True
-    else False end as label
+    case when mode is NULL then NULL
+        when mode = 'walk' then True
+        else False end as label
 from geolife.geolife_trajectory_label_speed
-where (( mode = 'walk' and speed <= 15 ) or (mode != 'walk' and speed <= 150 ))
+where (( mode = 'walk' and speed <= 15 ) or (mode != 'walk' and speed <= 150 ) or (mode is NULL))
 and tdate = '{{ ds }}';

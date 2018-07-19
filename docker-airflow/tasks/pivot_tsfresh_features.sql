@@ -33,7 +33,7 @@ THEN
     )
     select p.*,
         label,
-        substr(id, 1, 10)::date as tdate
+        regexp_replace(id, '^.*([0-9-]{10})_.*$', E'\\1')::date as tdate
     from geolife.ts_features_walk{{ds_nodash}}_pvt p
     inner join l using (id);
 END IF;
