@@ -107,13 +107,22 @@ tsfresh_predict_features = PostgresOperator(
 )
 
 
+predict_walk_trajectories = PostgresOperator(
+    task_id='predict_walk_trajectories',
+    postgres_conn_id='gpdb54',
+    sql='predict_walk_trajectories.sql',
+    database='airflow_test',
+    dag=dag
+)
+
+
 fetch_daily_trajectory >> clean_daily_trajectory >> merge_trajectory_label
 fetch_daily_label >> clean_daily_label >> merge_trajectory_label
 
 merge_trajectory_label >> calculate_trajectory_speed >> trajectory_speed_walk >> create_tsfresh_features >> pivot_tsfresh_features
 
 pivot_tsfresh_features >> tsfresh_model_features
-pivot_tsfresh_features >> tsfresh_predict_features
+pivot_tsfresh_features >> tsfresh_predict_features >> predict_walk_trajectories
 
 # fetch_daily_trajectory >> clean_daily_trajectory
 # fetch_daily_label >> clean_daily_label
