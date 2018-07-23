@@ -1,6 +1,6 @@
 --geolife.tsfresh_predict_features
---alter table geolife.walk_prediction_results drop partition if exists p{{ ds_nodash }};
---alter table geolife.walk_prediction_results add partition p{{ ds_nodash }};
+alter table geolife.walk_prediction_results drop partition if exists p{{ ds_nodash }};
+alter table geolife.walk_prediction_results add partition p{{ ds_nodash }} values (date '{{ ds }}');
 
 drop table if exists geolife.tsfresh_predict_features{{ds_nodash}};
 drop table if exists geolife.walk_prediction_results{{ds_nodash}};
