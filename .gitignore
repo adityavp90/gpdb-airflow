@@ -9,7 +9,6 @@ python-notebooks/.dslab_user.cred
 .pairs
 *.error
 *.out
-env.sh
 **/__pycache__
 airflow-webserver.pid
 docker-gpdb/pivotal/

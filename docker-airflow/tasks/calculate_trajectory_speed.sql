@@ -2,6 +2,7 @@ alter table geolife.geolife_trajectory_label_speed drop partition if exists p{{ 
 alter table geolife.geolife_trajectory_label_speed add partition p{{ ds_nodash }}
 values (date '{{ ds }}');
 
+-- Calculate distance, interval and speed between 2 consecutive gps location points
 insert into geolife.geolife_trajectory_label_speed
 with lead_trajectory as (
 select *,

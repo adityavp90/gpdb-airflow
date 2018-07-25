@@ -1,16 +1,17 @@
---geolife.tsfresh_predict_features
 alter table geolife.walk_prediction_results drop partition if exists p{{ ds_nodash }};
 alter table geolife.walk_prediction_results add partition p{{ ds_nodash }} values (date '{{ ds }}');
 
 drop table if exists geolife.tsfresh_predict_features{{ds_nodash}};
 drop table if exists geolife.walk_prediction_results{{ds_nodash}};
---drop table if exists geolife.ts_features_walk{{ds_nodash}}_pvt_dictionary;
 
 create table geolife.tsfresh_predict_features{{ds_nodash}}
 as
 select *
 from geolife.tsfresh_predict_features
 where tdate = '{{ ds }}' ;
+
+-- If there is data to be predicted this day and there is built model present in the model_metadata table,
+-- use the this model to predict walk or not walk for each trajectory_id in the new data
 
 DO
 $do$
@@ -42,6 +43,5 @@ $do$;
 
 drop table if exists geolife.tsfresh_predict_features{{ds_nodash}};
 drop table if exists geolife.walk_prediction_results{{ds_nodash}};
---drop table if exists geolife.ts_features_walk{{ds_nodash}}_pvt_dictionary;
 
 

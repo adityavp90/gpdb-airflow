@@ -2,6 +2,7 @@ alter table geolife.ts_features_walk drop partition if exists p{{ ds_nodash }};
 alter table geolife.ts_features_walk add partition p{{ ds_nodash }}
 values (date '{{ ds }}');
 
+-- Use the tsfresh_features plpython function to generate timeseries features for all trajectories
 insert into geolife.ts_features_walk
 with a as
 (

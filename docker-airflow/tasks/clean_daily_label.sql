@@ -2,6 +2,7 @@ alter table geolife.geolife_label_clean drop partition if exists p{{ ds_nodash }
 alter table geolife.geolife_label_clean add partition p{{ ds_nodash }}
 values (date '{{ ds }}');
 
+-- create start and end timestamp columns as clean step
 insert into geolife.geolife_label_clean
 select *,
     (start_date || ' ' || start_time)::timestamp as start_ts,

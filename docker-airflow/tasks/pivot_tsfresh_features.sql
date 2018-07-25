@@ -8,6 +8,8 @@ select *
 from geolife.ts_features_walk
 where tdate = '{{ ds }}' ;
 
+-- If there is new data this day, pivot the features_walk data from long format to wide format using madlibs pivot function
+
 DO
 $do$
 BEGIN

@@ -1,6 +1,8 @@
 alter table geolife.geolife_trajectory_speed_walk drop partition if exists p{{ ds_nodash }};
 alter table geolife.geolife_trajectory_speed_walk add partition p{{ ds_nodash }} values (date '{{ ds }}');
 
+-- Generating true/false label for modelling based on whether the mode of transport is walk.
+-- Removing outliers for walk and non walk trajectories
 insert into geolife.geolife_trajectory_speed_walk
 select trajectory_id as id,
     tdate,

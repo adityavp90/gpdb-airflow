@@ -13,6 +13,10 @@ drop function if exists geolife.tsfresh_features(
     float[]
 );
 
+-- This plpython function takes in trajectory id, timestamp and distance_miles, interval_hour and speed arrays as input
+-- and returns a set of timeseries features for each trajectory_id in long format (trajectory_id, timeseries_featurename, value).
+-- The timeseries features are calculated using tsfresh python package
+
 create or replace function geolife.tsfresh_features(
     trajectory_id text[],
     ttime timestamp[],

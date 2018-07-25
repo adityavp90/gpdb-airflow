@@ -8,7 +8,7 @@ end_time time,
 mode text
 );
 
-
+-- Load label data from S3 using external web tables
 drop external table if exists geolife.ext_geolife_label_landing;
 create readable external web table geolife.ext_geolife_label_landing (
 like geolife.geolife_label_landing

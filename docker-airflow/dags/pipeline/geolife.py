@@ -124,9 +124,3 @@ merge_trajectory_label >> calculate_trajectory_speed >> trajectory_speed_walk >>
 pivot_tsfresh_features >> tsfresh_model_features
 pivot_tsfresh_features >> tsfresh_predict_features >> predict_walk_trajectories
 
-# fetch_daily_trajectory >> clean_daily_trajectory
-# fetch_daily_label >> clean_daily_label
-# clean_daily_trajectory >> merge_trajectory_label
-# clean_daily_label >> merge_trajectory_label
-# merge_trajectory_label >> calculate_trajectory_speed
-# calculate_trajectory_speed >> trajectory_speed_walk

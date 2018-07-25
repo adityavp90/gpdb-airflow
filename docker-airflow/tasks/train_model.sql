@@ -1,3 +1,5 @@
+-- perform the train test split (80/20)
+
 DROP TABLE IF EXISTS geolife.features_walk_{{ds_nodash}}_test, geolife.features_walk_{{ds_nodash}}_train;
 SELECT madlib.train_test_split(
                                 'geolife.tsfresh_model_features',    -- Source table
@@ -8,6 +10,8 @@ SELECT madlib.train_test_split(
                                 NULL, -- Columns to output
                                 FALSE,     -- Sample without replacement
                                 TRUE);    -- Separate output tables
+
+-- build a random forest model using madlib
 
 DROP TABLE IF EXISTS geolife.rf_walk_{{ds_nodash}}_output, geolife.rf_walk_{{ds_nodash}}_output_group, geolife.rf_walk_{{ds_nodash}}_output_summary;
 SELECT madlib.forest_train('geolife.features_walk_{{ds_nodash}}_train',         -- source table
@@ -27,12 +31,16 @@ SELECT madlib.forest_train('geolife.features_walk_{{ds_nodash}}_train',         
                            10::integer        -- number of splits per continuous variable
                            );
 
+-- Evalute the built model
+
 DROP TABLE IF EXISTS geolife.rf_walk_{{ds_nodash}}_results;
 SELECT madlib.forest_predict('geolife.rf_walk_{{ds_nodash}}_output',        -- tree model
                              'geolife.features_walk_{{ds_nodash}}_test',             -- new data table
                              'geolife.rf_walk_{{ds_nodash}}_results') ;--,  -- output table
                              --'prob');
 
+
+-- Capture model results
 
 drop table if exists geolife.walk_{{ds_nodash}}_result;
 create table geolife.walk_{{ds_nodash}}_result
@@ -53,6 +61,8 @@ SELECT madlib.area_under_roc( 'geolife.walk_{{ds_nodash}}_result', 'geolife.walk
 
 DROP TABLE IF EXISTS geolife.walk_{{ds_nodash}}_cm;
 SELECT madlib.confusion_matrix( 'geolife.walk_{{ds_nodash}}_result', 'geolife.walk_{{ds_nodash}}_cm', 'pred', 'obs');
+
+-- Insert model metadata into models_metadata table
 
 insert into geolife.models_metadata
     select '{{ ds }}'::date,

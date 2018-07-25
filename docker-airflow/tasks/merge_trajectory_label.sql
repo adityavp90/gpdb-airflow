@@ -2,6 +2,10 @@ alter table geolife.geolife_trajectory_label_clean drop partition if exists p{{ 
 alter table geolife.geolife_trajectory_label_clean add partition p{{ ds_nodash }}
 values (date '{{ ds }}');
 
+
+-- Has 2 insert statements which separates the daily data for model generation vs prediction based on whether its labelled
+
+-- Joins label and trajectory data and creates a trajectory id for each row
 insert into geolife.geolife_trajectory_label_clean
 with l as (
 select *,
@@ -18,6 +22,8 @@ from l inner join
     t.ttimestamp >= l.start_ts and
     t.ttimestamp <= l.end_ts;
 
+-- Breaks down the unlabelled trajectory data into groups of 20 consecutive gps location points for predicting the transportation mode.
+-- generates trajectory id and sets mode to NULL
 insert into geolife.geolife_trajectory_label_clean
 with sub as (
     select * from geolife.geolife_trajectory_clean

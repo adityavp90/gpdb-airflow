@@ -10,6 +10,7 @@ tdate date,
 ttime time
 );
 
+-- Load trajectory data from S3 using external web tables
 drop external table if exists geolife.ext_geolife_trajectory_landing;
 create readable external web table geolife.ext_geolife_trajectory_landing (
 like geolife.geolife_trajectory_landing
