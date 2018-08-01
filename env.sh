@@ -3,13 +3,8 @@
 # Project root
 export PROJECT_ROOT=$(pwd)
 
-# GPDB installation
+# GPDB binary download
 export PIVNET_AUTH_TOKEN=""  ## <-- Set PIVNET_AUTH_TOKEN
-export GPDB_INSTALLER="greenplum-db-5.4.1-rhel6-x86_64"
-export DATA_SCIENCE_PYTHON_INSTALLER="DataSciencePython-1.1.1-gp5-rhel6-x86_64"
-export MADLIB_INSTALLER="madlib-1.13-gp5-rhel6-x86_64"
-export POSTGIS_INSTALLER="postgis-2.1.5-gp5-rhel6-x86_64"
-export POSTGIS_INSTALLER="postgis-2.1.5-gp5-rhel6-x86_64"
 
 # GPDB initialization
 export GEOLIFE_DATABASE="airflow_test"
