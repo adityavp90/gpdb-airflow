@@ -83,6 +83,7 @@ docker pull puckel/docker-airflow
 docker run --rm --network=gpbridge -p 8080:8080 -itd --name airflow \
 -v $(pwd)/docker-airflow/dags:/usr/local/airflow/dags \
 -v $(pwd)/docker-airflow/tasks:/usr/local/airflow/tasks \
+-v $(pwd)/docker-airflow/tests:/usr/local/airflow/tests \
 puckel/docker-airflow
 
 # Start the airflow scheduler
