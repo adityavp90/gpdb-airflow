@@ -48,10 +48,7 @@ Build docker image passing parameters:
 ```bash
 # Bu
 cd docker-gpdb
-docker build --build-arg GPDB_INSTALLER=${GPDB_INSTALLER} \
---build-arg MADLIB_INSTALLER=${MADLIB_INSTALLER} \
---build-arg DATA_SCIENCE_PYTHON_INSTALLER=${DATA_SCIENCE_PYTHON_INSTALLER} \
---build-arg POSTGIS_INSTALLER=${POSTGIS_INSTALLER} \
+docker build \
 . -t gpdb54:latest
 cd ..
 
