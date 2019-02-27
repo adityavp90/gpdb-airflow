@@ -1,3 +1,0 @@
-export MASTER_DATA_DIRECTORY=/gpdata/master/gpseg-1
-export GPHOME=/usr/local/greenplum-db
-source /usr/local/greenplum-db/greenplum_path.sh
