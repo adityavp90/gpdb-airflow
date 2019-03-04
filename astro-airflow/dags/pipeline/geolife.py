@@ -18,8 +18,8 @@ gpdb_database = 'geolife'
 
 default_args = {
     'owner': 'airflow_user',
-    'start_date': datetime(2007, 4, 10),
-    'end_date': datetime(2007, 4, 15)
+    'start_date': datetime(2007, 4, 12),
+    'end_date': datetime(2007, 5, 12)
 }
 
 dag = DAG('geolife', default_args=default_args,
