@@ -11,7 +11,7 @@ Figure Flyway Greenplum compatibility
 Docker machine for Greenplum 5.4.1
 ```bash
 docker-machine create --virtualbox-disk-size 50000 gpdb
-eval "$(docker-machine env gpdb)"
+eval "$(docker-machine env gpdb-aws)"
 docker network create -d bridge gpbridge
 docker run --rm --network gpbridge -p 5432:5432 --name gpdb54 -itd apadhye/gpdb-singlenode:5.4.1-ds
 ```
@@ -24,7 +24,7 @@ docker run --rm --network gpbridge -p 5432:5432 --name gpdb54 -itd apadhye/gpdb-
 docker-machine create --driver amazonec2 --amazonec2-region us-west-2 --amazonec2-open-port 5432 --amazonec2-instance-type "r4.xlarge" --amazonec2-root-size "50" gpdb-aws
 eval $(docker-machine env gpdb-aws)
 
-## Associate IP address in console
+## Associate Elastic IP address in console
 docker-machine regenerate-certs gpdb-aws
 eval $(docker-machine env gpdb-aws)
 
@@ -33,16 +33,20 @@ docker run --rm --network gpbridge -p 5432:5432 --name gpdb54 -itd apadhye/gpdb-
 ```
 
 ### Create database and user
+```bash
 PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d gpadmin -c 'create database geolife'
 PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d geolife -c 'create schema geolife'
+```
 
 
 //PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d gpadmin -c "create user airflow with superuser password 'airflow'"
 
 ### Initialize madlib and plpython
+```bash
 docker exec -it gpdb54 su gpadmin -l -c "/usr/local/greenplum-db/madlib/bin/madpack -s madlib -p greenplum -c gpadmin@$localhost:5432/${GPDB_DATABASE} install"
 docker exec -it gpdb54 su gpadmin -l -c "/usr/local/greenplum-db/share/postgresql/contrib/postgis-2.1/postgis_manager.sh ${GPDB_DATABASE} install"
 docker exec -it gpdb54 su gpadmin -l -c "createlang plpythonu -d ${GPDB_DATABASE}"
+```
 
 
 ### Flyway Migrations
@@ -76,6 +80,23 @@ docker exec -it astroairflow_scheduler_1 airflow connections --add --conn_id gpd
 ### Adding failing row for 05-13-2007
 insert into geolife.geolife_trajectory_landing values ('058', 140.0063166666667, 116.277, 0, 288.713910761155, 39215.102650463 , '2007-05-13' , '02:27:52');
 
+
+
+### Testing
+### Create database
+```bash
+PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d gpadmin -c 'create database geolife_test'
+PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d geolife_test -c 'create schema geolife'
+```
+docker exec -it gpdb54 su gpadmin -l -c "/usr/local/greenplum-db/madlib/bin/madpack -s madlib -p greenplum -c gpadmin@$localhost:5432/geolife_test install"
+docker exec -it gpdb54 su gpadmin -l -c "/usr/local/greenplum-db/share/postgresql/contrib/postgis-2.1/postgis_manager.sh geolife_test install"
+docker exec -it gpdb54 su gpadmin -l -c "createlang plpythonu -d geolife_test"
+
+### Run with change to database in conf file pointing to geolife_test
+docker run --rm -v `pwd`/flyway/sql:/flyway/sql \
+    -v `pwd`/flyway/conf:/flyway/conf \
+    -v `pwd`/flyway/drivers:/flyway/drivers \
+boxfuse/flyway:4.2 migrate
 
 
 ## Appendix
