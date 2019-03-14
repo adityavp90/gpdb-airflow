@@ -3,7 +3,7 @@ version: 2
 jobs:
   migrate_greenplum_test:
     docker:
-      - image: boxfuse/flyway:4.2
+        - image: boxfuse/flyway
     working_directory: ~/gpdb-airflow
     steps:
     - checkout
