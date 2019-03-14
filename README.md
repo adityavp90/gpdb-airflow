@@ -81,24 +81,6 @@ docker exec -it astroairflow_scheduler_1 airflow connections --add --conn_id gpd
 insert into geolife.geolife_trajectory_landing values ('058', 140.0063166666667, 116.277, 0, 288.713910761155, 39215.102650463 , '2007-05-13' , '02:27:52');
 
 
-
-### Testing
-### Create database
-```bash
-PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d gpadmin -c 'create database geolife_test'
-PGPASSWORD=pivotal psql -h $GPDB_HOST -U gpadmin -d geolife_test -c 'create schema geolife'
-```
-docker exec -it gpdb54 su gpadmin -l -c "/usr/local/greenplum-db/madlib/bin/madpack -s madlib -p greenplum -c gpadmin@$localhost:5432/geolife_test install"
-docker exec -it gpdb54 su gpadmin -l -c "/usr/local/greenplum-db/share/postgresql/contrib/postgis-2.1/postgis_manager.sh geolife_test install"
-docker exec -it gpdb54 su gpadmin -l -c "createlang plpythonu -d geolife_test"
-
-### Run with change to database in conf file pointing to geolife_test
-docker run --rm -v `pwd`/flyway/sql:/flyway/sql \
-    -v `pwd`/flyway/conf:/flyway/conf \
-    -v `pwd`/flyway/drivers:/flyway/drivers \
-boxfuse/flyway:4.2 migrate
-
-
 ## Appendix
 Madlib/Postgis/PlPython Init:
 ```bash
