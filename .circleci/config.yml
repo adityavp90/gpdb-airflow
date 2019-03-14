@@ -84,7 +84,7 @@ workflows:
   build_and_deploy:
     jobs:
     - migrate_greenplum_test
-    - run_test:
+    - run_tests:
         requires:
         - migrate_greenplum_test
         filters:
@@ -92,7 +92,7 @@ workflows:
             only: master
     - migrate_greenplum_staging:
         requires:
-        - run_test
+        - run_tests
         filters:
           branches:
             only: master
